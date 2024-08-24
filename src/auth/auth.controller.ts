@@ -11,6 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { SignInDto } from './authDto';
 import { AuthGuard } from './auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
@@ -25,6 +26,7 @@ export class AuthController {
     return await this.authService.signIn(username, password);
   }
 
+  @ApiBearerAuth()
   @UseGuards(AuthGuard)
   @Get('user-profile')
   async getProfile(@Request() req) {
