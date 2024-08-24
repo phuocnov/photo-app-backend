@@ -11,8 +11,13 @@ export class AuthService {
 
   async signIn(username: string, password: string) {
     const user = await this.userService.findOne(username);
+    console.log('SERVICE::found user', user);
 
-    if (user && user.password === password) {
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    if (user && user.password !== password) {
       throw new UnauthorizedException();
     }
     // TODO: Implement JWT token generation
