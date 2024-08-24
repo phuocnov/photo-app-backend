@@ -71,3 +71,10 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## DOCKER
+
+Navigate to Dirrectory folder interminal. then run command
+```bash
+docker build -t app ./
+docker volume create --name nodemodulesj
