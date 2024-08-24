@@ -8,10 +8,8 @@ export class AuthService {
     private userService: UsersService,
     private jwtService: JwtService,
   ) {}
-
   async signIn(username: string, password: string) {
     const user = await this.userService.findOne(username);
-    console.log('SERVICE::found user', user);
 
     if (!user) {
       throw new UnauthorizedException();
