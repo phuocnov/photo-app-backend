@@ -5,6 +5,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
+import { DocumentsModule } from './documents/documents.module';
+import { WorkspacesModule } from './workspaces/workspaces.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { User } from './entities/user.entity';
       synchronize: true,
       entities: [User],
     }),
+    DocumentsModule,
+    WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
