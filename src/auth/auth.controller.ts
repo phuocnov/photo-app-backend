@@ -1,14 +1,6 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Request,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignInDto } from './authDto';
+import { SignInDto, SignUpDto } from './authDto';
 import { ApiBearerAuth } from '@nestjs/swagger';
 import { Public } from 'src/decorators/public.decorator';
 
@@ -17,7 +9,6 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @Public()
-  @HttpCode(HttpStatus.OK)
   @Post('login')
   async signIn(@Body() signInDto: SignInDto) {
     const { username, password } = signInDto;
@@ -26,6 +17,14 @@ export class AuthController {
     return await this.authService.signIn(username, password);
   }
 
+  @Public()
+  @Post('register')
+  async signUp(@Body() signUpDto: SignUpDto) {
+    const { username, password } = signUpDto;
+    return await this.authService.signUp(username, password);
+  }
+
+  @Public()
   @ApiBearerAuth()
   @Get('user-profile')
   async getProfile(@Request() req) {

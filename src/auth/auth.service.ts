@@ -9,20 +9,18 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
   async signIn(username: string, password: string) {
-    const user = await this.userService.findOne(username);
+    const user = await this.userService.findOne({ username, password });
 
     if (!user) {
       throw new UnauthorizedException();
     }
-
-    if (user && user.password !== password) {
-      throw new UnauthorizedException();
-    }
-    // TODO: Implement JWT token generation
-
-    const payload = { username: user.username, sub: user.userId };
+    const payload = { username: user.username, sub: user.id };
     return {
       access_token: await this.jwtService.sign(payload),
     };
+  }
+
+  async signUp(username: string, password: string) {
+    return await this.userService.create({ username, password });
   }
 }

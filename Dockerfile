@@ -2,10 +2,12 @@ FROM node:21.7.3
 
 WORKDIR /app
 
-COPY package.json ./
+COPY package*.json ./
 
-RUN npm i 
+RUN npm install
+
 COPY . .
-RUN npm run build 
 
-CMD [ "npm", "run start:dev" ]
+EXPOSE 3000
+
+CMD ["npm", "run", "start:dev"]

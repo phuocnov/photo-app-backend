@@ -1,28 +1,36 @@
 /* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
-
-export type User = {
-  userId: number;
-  username: string;
-  password: string;
-};
-
+import { InjectRepository } from '@nestjs/typeorm';
+import { SignInDto, SignUpDto } from 'src/auth/authDto';
+import { User } from 'src/entities/user.entity';
+import { Repository } from 'typeorm';
 @Injectable()
 export class UsersService {
-  private readonly users: User[] = [
-    {
-      userId: 1,
-      username: 'john',
-      password: '123123123',
-    },
-    {
-      userId: 1,
-      username: 'maria',
-      password: '123123123',
-    },
-  ];
-  
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user=> user.username === username);
-  };
+  constructor(
+    @InjectRepository(User)
+    private usersRepository: Repository<User>,
+  ) {}
+
+  async create(user: SignUpDto): Promise<User> {
+    return this.usersRepository.save(user);
+  }
+
+  async findAll(): Promise<User[]> {
+    return this.usersRepository.find();
+  }
+
+  async findOne(signInDto: SignInDto): Promise<User> {
+    return this.usersRepository.findOne({
+      where: { username: signInDto.username, password: signInDto.password },
+    });
+  }
+
+  async update(id: number, user: User): Promise<User> {
+    await this.usersRepository.update(id, user);
+    return this.usersRepository.findOne({ where: { id } });
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.usersRepository.delete(id);
+  }
 }
