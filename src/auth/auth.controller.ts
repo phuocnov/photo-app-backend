@@ -12,11 +12,8 @@ export class AuthController {
   @Post('login')
   async signIn(@Body() signInDto: SignInDto) {
     const { username, password } = signInDto;
-    console.log({ username, password });
-
     return await this.authService.signIn(username, password);
   }
-
   @Public()
   @Post('register')
   async signUp(@Body() signUpDto: SignUpDto) {
