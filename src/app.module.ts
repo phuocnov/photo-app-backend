@@ -12,6 +12,8 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
   imports: [
     AuthModule,
     UsersModule,
+    DocumentsModule,
+    WorkspacesModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -23,8 +25,6 @@ import { WorkspacesModule } from './workspaces/workspaces.module';
       synchronize: true,
       entities: [User],
     }),
-    DocumentsModule,
-    WorkspacesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
