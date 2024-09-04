@@ -20,4 +20,7 @@ export class Workspace {
 
   @OneToMany(() => User, (user) => user.id)
   users: User[];
+
+  @Column()
+  isPrivate: boolean;
 }
